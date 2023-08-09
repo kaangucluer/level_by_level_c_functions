@@ -32,55 +32,41 @@ $>
 
 #include <unistd.h>
 
-void repeat_alpha(char *stralpha)
+void put_alphabet(char letter, int size)
+{
+    int k = 0;
+    while(k < size)
+    {
+        write(1,&letter,1);
+        k++;
+    }
+}
+
+void repeat_alphabet(char *str)
 {
     int i = 0;
-    char lower_alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
-    char UPPER_alphabet[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    while(stralpha[i] != '\0')
+    while(str[i] != '\0')
     {
-        int j = 0;
-        int k = 0;
-        int l = 0;
-
-        while(stralpha[i] > 'a' && stralpha[i] < 'z')
+        if(str[i] >= 'a' && str[i] <= 'z')
         {
-            while(lower_alphabet[j] == stralpha[i])
-            {
-                while(l <= j)
-                {
-                    write(1,&stralpha[i],1);
-                    l++;
-                }
-            }
-            j++;   
+            put_alphabet(str[i], str[i] + 1 - 'a');
         }
-        
-        while(stralpha[i] > 'A' && stralpha[i] < 'Z')
+        else if(str[i] >= 'A' && str[i] <= 'Z')
         {
-            while(UPPER_alphabet[k] == stralpha[i])
-            {
-                while(l <= k)
-                {
-                    write(1,&stralpha[i],1);
-                    k++;
-                }
-            }
-            k++;
+            put_alphabet(str[i], str[i] + 1 - 'A');
         }
-
+        else
+            write(1,&str[i],1);
         i++;
     }
 }
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
     if(argc == 2)
     {
-        repeat_alpha(argv[1]);
+        repeat_alphabet(argv[1]);
     }
-    write(1,"\n",1);
+    write(1, "\n", 1);
     return 0;
 }
-
